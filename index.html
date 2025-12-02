@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apostilas Premium - Impressão e Encadernação Profissional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         :root {
             --primary: #2c3e50;
@@ -712,6 +714,11 @@
             border: 1px solid #ddd;
         }
         
+        #qrCodeCanvas {
+            margin: 0 auto;
+            display: block;
+        }
+        
         .pix-code {
             background-color: #f1f1f1;
             padding: 15px;
@@ -720,6 +727,12 @@
             word-break: break-all;
             margin: 20px 0;
             font-size: 0.9rem;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .pix-code:hover {
+            background-color: #e8e8e8;
         }
         
         .copy-btn {
@@ -777,6 +790,121 @@
         .payment-info h3 i {
             margin-right: 10px;
             color: var(--pix-color);
+        }
+        
+        /* Copied Notification */
+        .copied-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .admin-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1);
+            background-color: #1a252f;
+        }
+        
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-content {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .admin-tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #777;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .admin-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .admin-form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
         }
         
         /* Responsive */
@@ -1122,7 +1250,7 @@
                 </div>
             </div>
             <div class="copyright">
-                &copy; 2023 Apostilas Premium. Todos os direitos reservados.
+                &copy; <span id="currentYear"></span> Apostilas Premium. Todos os direitos reservados.
             </div>
         </div>
     </footer>
@@ -1166,38 +1294,38 @@
             </div>
             <div class="checkout-form">
                 <div class="form-group">
-                    <label for="customerName">Nome Completo</label>
+                    <label for="customerName">Nome Completo *</label>
                     <input type="text" id="customerName" required>
                 </div>
                 <div class="form-group">
-                    <label for="customerEmail">E-mail</label>
+                    <label for="customerEmail">E-mail *</label>
                     <input type="email" id="customerEmail" required>
                 </div>
                 <div class="form-group">
-                    <label for="customerPhone">Telefone (WhatsApp)</label>
+                    <label for="customerPhone">Telefone (WhatsApp) *</label>
                     <input type="tel" id="customerPhone" required>
                 </div>
                 <div class="form-group">
-                    <label for="customerAddress">Endereço Completo</label>
+                    <label for="customerAddress">Endereço Completo *</label>
                     <input type="text" id="customerAddress" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="customerCity">Cidade</label>
+                        <label for="customerCity">Cidade *</label>
                         <input type="text" id="customerCity" required>
                     </div>
                     <div class="form-group">
-                        <label for="customerState">Estado</label>
+                        <label for="customerState">Estado *</label>
                         <input type="text" id="customerState" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="customerCEP">CEP</label>
+                        <label for="customerCEP">CEP *</label>
                         <input type="text" id="customerCEP" required>
                     </div>
                     <div class="form-group">
-                        <label for="customerNumber">Número</label>
+                        <label for="customerNumber">Número *</label>
                         <input type="text" id="customerNumber" required>
                     </div>
                 </div>
@@ -1233,22 +1361,18 @@
                 </div>
                 
                 <div class="pix-qr-code">
-                    <div id="qrCodeDisplay" style="margin: 0 auto 20px; width: 200px; height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        <span style="color: #666;">QR Code será gerado aqui</span>
-                    </div>
-                    <p style="font-weight: bold; margin-bottom: 10px;">Valor: <span id="pixAmount">R$ 0,00</span></p>
+                    <canvas id="qrCodeCanvas" width="200" height="200"></canvas>
+                    <p style="font-weight: bold; margin: 20px 0 10px;">Valor: <span id="pixAmount">R$ 0,00</span></p>
                     <p style="font-size: 0.9rem; color: #666;">Escaneie com seu app de banco</p>
                 </div>
                 
                 <div style="text-align: center; margin: 20px 0;">
                     <p style="font-weight: bold; margin-bottom: 10px;">OU</p>
-                    <p style="margin-bottom: 10px;">Copie o código PIX:</p>
+                    <p style="margin-bottom: 10px;">Clique para copiar o código PIX:</p>
                     <div class="pix-code" id="pixCode">
-                        00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865405<span id="pixValue">0.00</span>5802BR5913ApostilasPrem6009SAO PAULO62200516<span id="pixOrderId">AP0000</span>6304E2CA
+                        Clique em "Confirmar Pedido" para gerar o código PIX
                     </div>
-                    <button class="copy-btn" id="copyPixBtn">
-                        <i class="fas fa-copy"></i> Copiar Código PIX
-                    </button>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Cole no seu app de banco para pagar</p>
                 </div>
                 
                 <div class="pix-instructions">
@@ -1256,14 +1380,14 @@
                     <ol>
                         <li>Abra o app do seu banco</li>
                         <li>Selecione "Pagar com PIX"</li>
-                        <li>Escaneie o QR Code ou cole o código</li>
+                        <li>Escaneie o QR Code ou cole o código copiado</li>
                         <li>Confirme o pagamento</li>
                     </ol>
                 </div>
                 
                 <div style="margin-top: 25px; padding: 15px; background-color: #e9f7ef; border-radius: 5px; border-left: 4px solid var(--success);">
                     <p style="margin: 0; color: #2d6a4f; font-weight: 600;">
-                        <i class="fas fa-info-circle"></i> Após o pagamento, seu pedido será processado automaticamente em até 2 minutos.
+                        <i class="fas fa-info-circle"></i> Após o pagamento, clique no botão abaixo para confirmar.
                     </p>
                 </div>
                 
@@ -1279,7 +1403,7 @@
         <div class="modal-content">
             <div class="loading">
                 <div class="loading-spinner"></div>
-                <p>Processando seu pedido...</p>
+                <p id="loadingText">Processando seu pedido...</p>
             </div>
         </div>
     </div>
@@ -1302,11 +1426,85 @@
         </div>
     </div>
 
+    <!-- Admin Panel Button -->
+    <div class="admin-panel">
+        <button class="admin-btn" id="adminBtn">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <div class="modal-header">
+                <h2>Configurações do PIX</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="pix">Configurações PIX</button>
+                <button class="admin-tab" data-tab="orders">Pedidos</button>
+            </div>
+            
+            <div id="pixTab" class="admin-tab-content">
+                <div class="admin-form-group">
+                    <label for="pixKey">Chave PIX *</label>
+                    <input type="text" id="pixKey" placeholder="seu-pix@email.com ou CPF/CNPJ">
+                    <small style="color: #666;">Informe sua chave PIX (e-mail, CPF, CNPJ ou telefone)</small>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label for="pixName">Nome no PIX *</label>
+                    <input type="text" id="pixName" placeholder="Seu Nome ou Nome da Empresa">
+                </div>
+                
+                <div class="admin-form-group">
+                    <label for="pixCity">Cidade *</label>
+                    <input type="text" id="pixCity" placeholder="Cidade">
+                </div>
+                
+                <div class="admin-form-group">
+                    <label for="adminEmail">E-mail para notificações</label>
+                    <input type="email" id="adminEmail" placeholder="seu-email@dominio.com">
+                    <small style="color: #666;">Receberá notificações de novos pedidos</small>
+                </div>
+                
+                <button class="btn btn-pix" id="savePixConfig" style="width: 100%;">
+                    <i class="fas fa-save"></i> Salvar Configurações
+                </button>
+                
+                <div id="pixConfigStatus" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
+            </div>
+            
+            <div id="ordersTab" class="admin-tab-content" style="display: none;">
+                <h3>Últimos Pedidos</h3>
+                <div id="ordersList" style="margin-top: 20px;">
+                    <p style="text-align: center; color: #666;">Nenhum pedido ainda</p>
+                </div>
+                <button class="btn" id="clearOrders" style="width: 100%; margin-top: 20px;">
+                    <i class="fas fa-trash"></i> Limpar Todos os Pedidos
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copied Notification -->
+    <div class="copied-notification" id="copiedNotification">
+        <i class="fas fa-check-circle"></i> Código PIX copiado!
+    </div>
+
     <script>
-        // Carrinho de compras
+        // ================= CONFIGURAÇÃO INICIAL =================
+        // Dados do sistema
         let cart = [];
         let currentOrderNumber = '';
-        
+        let pixConfig = {
+            key: '',
+            name: '',
+            city: ''
+        };
+        let orders = [];
+
         // Elementos do DOM
         const cartIcon = document.getElementById('cartIcon');
         const cartModal = document.getElementById('cartModal');
@@ -1323,17 +1521,24 @@
         
         // Elementos PIX
         const pixAmount = document.getElementById('pixAmount');
-        const pixValue = document.getElementById('pixValue');
-        const pixOrderId = document.getElementById('pixOrderId');
         const pixCode = document.getElementById('pixCode');
-        const copyPixBtn = document.getElementById('copyPixBtn');
         const pixPaidBtn = document.getElementById('pixPaidBtn');
+        const qrCodeCanvas = document.getElementById('qrCodeCanvas');
         
         // Modais
         const loadingModal = document.getElementById('loadingModal');
+        const loadingText = document.getElementById('loadingText');
         const successModal = document.getElementById('successModal');
         const successButton = document.getElementById('successButton');
         const orderNumber = document.getElementById('orderNumber');
+        
+        // Admin
+        const adminBtn = document.getElementById('adminBtn');
+        const adminModal = document.getElementById('adminModal');
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const savePixConfigBtn = document.getElementById('savePixConfig');
+        const clearOrdersBtn = document.getElementById('clearOrders');
+        const ordersList = document.getElementById('ordersList');
         
         // Botões "Adicionar ao Carrinho"
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
@@ -1341,12 +1546,12 @@
         // Botão para adicionar apostila personalizada
         const addCustomToCartButton = document.getElementById('addCustomToCart');
         
-        // Função para atualizar o carrinho
+        // Notificação
+        const copiedNotification = document.getElementById('copiedNotification');
+
+        // ================= FUNÇÕES DO CARRINHO =================
         function updateCart() {
-            // Atualizar contador
             cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
-            
-            // Atualizar itens no modal
             cartItems.innerHTML = '';
             
             if (cart.length === 0) {
@@ -1384,16 +1589,13 @@
                 cartItems.appendChild(cartItem);
             });
             
-            // Calcular frete (fixo por enquanto)
             const shipping = subtotal > 50 ? 0 : 10;
             const total = subtotal + shipping;
             
-            // Atualizar totais
             cartSubtotal.textContent = `R$ ${subtotal.toFixed(2)}`;
             cartShipping.textContent = shipping === 0 ? 'Grátis' : `R$ ${shipping.toFixed(2)}`;
             cartTotal.textContent = `R$ ${total.toFixed(2)}`;
             
-            // Adicionar eventos aos botões de quantidade
             document.querySelectorAll('.decrease-quantity').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const id = e.target.getAttribute('data-id');
@@ -1416,7 +1618,6 @@
             });
         }
         
-        // Funções para manipular o carrinho
         function addToCart(id, name, price, description = '') {
             const existingItem = cart.find(item => item.id === id);
             
@@ -1455,28 +1656,117 @@
             cart = cart.filter(item => item.id !== id);
             updateCart();
         }
-        
-        // Função para gerar número de pedido
+
+        // ================= FUNÇÕES PIX =================
         function generateOrderNumber() {
             const timestamp = Date.now();
             const randomNum = Math.floor(Math.random() * 1000);
             return `AP${timestamp.toString().slice(-6)}${randomNum.toString().padStart(3, '0')}`;
         }
         
-        // Função para gerar código PIX
         function generatePixCode(amount, orderId) {
-            // Esta é uma simulação de um código PIX
-            // Em um sistema real, você precisaria gerar um código PIX válido
-            const amountStr = amount.toFixed(2).replace('.', '');
-            const paddedAmount = amountStr.padStart(10, '0');
+            // Verificar se o PIX está configurado
+            if (!pixConfig.key || !pixConfig.name || !pixConfig.city) {
+                throw new Error('PIX não configurado. Configure suas informações PIX primeiro.');
+            }
             
-            // Código PIX simulado (não é válido para pagamento real)
-            return `00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865405${paddedAmount}5802BR5913ApostilasPrem6009SAO PAULO62200516${orderId}6304E2CA`;
+            // Formatar valor (em centavos, sem separador)
+            const valor = Math.round(amount * 100).toString().padStart(10, '0');
+            
+            // Dados obrigatórios do PIX
+            const payload = [
+                {id: "00", value: "01"}, // Payload Format Indicator
+                {id: "01", value: "12"}, // Point of Initiation Method (dinâmico)
+                
+                // Merchant Account Information
+                {id: "26", children: [
+                    {id: "00", value: "BR.GOV.BCB.PIX"}, // GUI
+                    {id: "01", value: pixConfig.key} // Chave PIX
+                ]},
+                
+                // Outros campos
+                {id: "52", value: "0000"}, // Merchant Category Code
+                {id: "53", value: "986"}, // Transaction Currency (BRL)
+                {id: "54", value: valor}, // Transaction Amount
+                {id: "58", value: "BR"}, // Country Code
+                {id: "59", value: pixConfig.name.substring(0, 25)}, // Merchant Name
+                {id: "60", value: pixConfig.city.substring(0, 15)}, // Merchant City
+                
+                // Campo adicional (ID do pedido)
+                {id: "62", children: [
+                    {id: "05", value: orderId} // Reference Label
+                ]}
+            ];
+            
+            // Gerar string do payload
+            let payloadString = "";
+            payload.forEach(field => {
+                if (field.children) {
+                    let childrenString = "";
+                    field.children.forEach(child => {
+                        childrenString += child.id + 
+                            ("00" + child.value.length).slice(-2) + 
+                            child.value;
+                    });
+                    payloadString += field.id + 
+                        ("00" + childrenString.length).slice(-2) + 
+                        childrenString;
+                } else {
+                    payloadString += field.id + 
+                        ("00" + field.value.length).slice(-2) + 
+                        field.value;
+                }
+            });
+            
+            // Adicionar CRC16
+            payloadString += "6304";
+            const crc = calculateCRC16(payloadString);
+            return payloadString + crc;
         }
         
-        // Função para processar o pedido
-        function processOrder() {
-            // Validar dados do formulário
+        function calculateCRC16(str) {
+            let crc = 0xFFFF;
+            for (let i = 0; i < str.length; i++) {
+                crc ^= str.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) {
+                    if (crc & 0x8000) {
+                        crc = (crc << 1) ^ 0x1021;
+                    } else {
+                        crc = crc << 1;
+                    }
+                }
+            }
+            return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+        }
+        
+        function generateQRCode(pixCode) {
+            QRCode.toCanvas(qrCodeCanvas, pixCode, {
+                width: 200,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            }, function(error) {
+                if (error) {
+                    console.error('Erro ao gerar QR Code:', error);
+                    qrCodeCanvas.getContext('2d').fillText('Erro QR Code', 10, 100);
+                }
+            });
+        }
+        
+        function showNotification(message, type = 'success') {
+            copiedNotification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            copiedNotification.style.display = 'block';
+            copiedNotification.style.backgroundColor = type === 'success' ? '#2ecc71' : '#e74c3c';
+            
+            setTimeout(() => {
+                copiedNotification.style.display = 'none';
+            }, 3000);
+        }
+
+        // ================= PROCESSAMENTO DE PEDIDOS =================
+        function validateOrderForm() {
             const customerName = document.getElementById('customerName').value;
             const customerEmail = document.getElementById('customerEmail').value;
             const customerPhone = document.getElementById('customerPhone').value;
@@ -1488,7 +1778,28 @@
             
             if (!customerName || !customerEmail || !customerPhone || !customerAddress || 
                 !customerCity || !customerState || !customerCEP || !customerNumber) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
+                showNotification('Preencha todos os campos obrigatórios!', 'error');
+                return false;
+            }
+            
+            // Validar e-mail
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(customerEmail)) {
+                showNotification('E-mail inválido!', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function processOrder() {
+            if (!validateOrderForm()) return;
+            
+            // Verificar se o PIX está configurado
+            if (!pixConfig.key || !pixConfig.name || !pixConfig.city) {
+                showNotification('Configure suas informações PIX primeiro!', 'error');
+                checkoutModal.style.display = 'none';
+                adminModal.style.display = 'flex';
                 return;
             }
             
@@ -1500,49 +1811,150 @@
             // Gerar número do pedido
             currentOrderNumber = generateOrderNumber();
             
-            // Criar objeto do pedido
-            const order = {
-                customer: {
-                    name: customerName,
-                    email: customerEmail,
-                    phone: customerPhone,
-                    address: `${customerAddress}, ${customerNumber}`,
-                    city: customerCity,
-                    state: customerState,
-                    cep: customerCEP
-                },
-                items: cart,
-                paymentMethod: 'PIX',
-                subtotal: subtotal,
-                shipping: shipping,
-                total: total,
-                orderNumber: currentOrderNumber,
-                date: new Date().toISOString()
-            };
-            
-            // Fechar modal de checkout
-            checkoutModal.style.display = 'none';
-            
-            // Configurar informações PIX
-            pixAmount.textContent = `R$ ${total.toFixed(2)}`;
-            pixValue.textContent = total.toFixed(2);
-            pixOrderId.textContent = currentOrderNumber;
-            
-            // Gerar novo código PIX
-            const pixCodeValue = generatePixCode(total, currentOrderNumber);
-            pixCode.textContent = pixCodeValue;
-            
-            // Mostrar modal PIX
-            pixModal.style.display = 'flex';
-            
-            // Aqui você enviaria o pedido para seu backend
-            console.log('Pedido criado:', order);
-            
-            // Em um sistema real, você enviaria os dados para seu servidor
-            // e geraria um QR Code PIX real
+            try {
+                // Gerar código PIX
+                const pixCodeValue = generatePixCode(total, currentOrderNumber);
+                
+                // Atualizar display
+                pixAmount.textContent = `R$ ${total.toFixed(2)}`;
+                pixCode.textContent = pixCodeValue;
+                
+                // Gerar QR Code
+                generateQRCode(pixCodeValue);
+                
+                // Criar objeto do pedido
+                const order = {
+                    customer: {
+                        name: document.getElementById('customerName').value,
+                        email: document.getElementById('customerEmail').value,
+                        phone: document.getElementById('customerPhone').value,
+                        address: `${document.getElementById('customerAddress').value}, ${document.getElementById('customerNumber').value}`,
+                        city: document.getElementById('customerCity').value,
+                        state: document.getElementById('customerState').value,
+                        cep: document.getElementById('customerCEP').value
+                    },
+                    items: [...cart],
+                    subtotal: subtotal,
+                    shipping: shipping,
+                    total: total,
+                    orderNumber: currentOrderNumber,
+                    date: new Date().toISOString(),
+                    status: 'pending'
+                };
+                
+                // Salvar pedido
+                saveOrder(order);
+                
+                // Fechar modal de checkout
+                checkoutModal.style.display = 'none';
+                
+                // Mostrar modal PIX
+                pixModal.style.display = 'flex';
+                
+            } catch (error) {
+                showNotification(error.message, 'error');
+                console.error('Erro ao processar pedido:', error);
+            }
         }
         
-        // Event Listeners
+        function saveOrder(order) {
+            orders.unshift(order);
+            localStorage.setItem('apostilas_premium_orders', JSON.stringify(orders));
+            updateOrdersList();
+            
+            // Aqui você poderia enviar o pedido para um backend real
+            console.log('Pedido salvo:', order);
+        }
+        
+        function updateOrdersList() {
+            ordersList.innerHTML = '';
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p style="text-align: center; color: #666;">Nenhum pedido ainda</p>';
+                return;
+            }
+            
+            orders.slice(0, 10).forEach(order => {
+                const orderElement = document.createElement('div');
+                orderElement.style.cssText = `
+                    padding: 15px;
+                    margin-bottom: 10px;
+                    background-color: #f8f9fa;
+                    border-radius: 5px;
+                    border-left: 4px solid ${order.status === 'paid' ? '#2ecc71' : '#f39c12'};
+                `;
+                
+                const itemsText = order.items.map(item => 
+                    `${item.name} (${item.quantity}x)`
+                ).join(', ');
+                
+                orderElement.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <strong>#${order.orderNumber}</strong><br>
+                            <small>${new Date(order.date).toLocaleDateString()}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <strong>R$ ${order.total.toFixed(2)}</strong><br>
+                            <small style="color: ${order.status === 'paid' ? '#2ecc71' : '#f39c12'}">
+                                ${order.status === 'paid' ? 'Pago' : 'Pendente'}
+                            </small>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.9em;">
+                        <div><strong>Cliente:</strong> ${order.customer.name}</div>
+                        <div><strong>Itens:</strong> ${itemsText}</div>
+                    </div>
+                `;
+                
+                ordersList.appendChild(orderElement);
+            });
+        }
+
+        // ================= ADMIN FUNCTIONS =================
+        function loadPixConfig() {
+            const savedConfig = localStorage.getItem('apostilas_premium_pix_config');
+            if (savedConfig) {
+                pixConfig = JSON.parse(savedConfig);
+                document.getElementById('pixKey').value = pixConfig.key || '';
+                document.getElementById('pixName').value = pixConfig.name || '';
+                document.getElementById('pixCity').value = pixConfig.city || '';
+            }
+            
+            const savedOrders = localStorage.getItem('apostilas_premium_orders');
+            if (savedOrders) {
+                orders = JSON.parse(savedOrders);
+                updateOrdersList();
+            }
+        }
+        
+        function savePixConfig() {
+            const key = document.getElementById('pixKey').value.trim();
+            const name = document.getElementById('pixName').value.trim();
+            const city = document.getElementById('pixCity').value.trim();
+            
+            if (!key || !name || !city) {
+                showNotification('Preencha todos os campos obrigatórios!', 'error');
+                return;
+            }
+            
+            pixConfig = { key, name, city };
+            localStorage.setItem('apostilas_premium_pix_config', JSON.stringify(pixConfig));
+            
+            const statusDiv = document.getElementById('pixConfigStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.style.backgroundColor = '#d4edda';
+            statusDiv.style.color = '#155724';
+            statusDiv.innerHTML = '<i class="fas fa-check"></i> Configurações salvas com sucesso!';
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
+            
+            showNotification('Configurações PIX salvas!');
+        }
+
+        // ================= EVENT LISTENERS =================
         cartIcon.addEventListener('click', () => {
             cartModal.style.display = 'flex';
         });
@@ -1554,25 +1966,17 @@
                 pixModal.style.display = 'none';
                 loadingModal.style.display = 'none';
                 successModal.style.display = 'none';
+                adminModal.style.display = 'none';
             });
         });
         
         window.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-                cartModal.style.display = 'none';
-            }
-            if (e.target === checkoutModal) {
-                checkoutModal.style.display = 'none';
-            }
-            if (e.target === pixModal) {
-                pixModal.style.display = 'none';
-            }
-            if (e.target === loadingModal) {
-                loadingModal.style.display = 'none';
-            }
-            if (e.target === successModal) {
-                successModal.style.display = 'none';
-            }
+            if (e.target === cartModal) cartModal.style.display = 'none';
+            if (e.target === checkoutModal) checkoutModal.style.display = 'none';
+            if (e.target === pixModal) pixModal.style.display = 'none';
+            if (e.target === loadingModal) loadingModal.style.display = 'none';
+            if (e.target === successModal) successModal.style.display = 'none';
+            if (e.target === adminModal) adminModal.style.display = 'none';
         });
         
         addToCartButtons.forEach(button => {
@@ -1583,7 +1987,6 @@
                 
                 addToCart(id, name, price);
                 
-                // Feedback visual
                 e.target.textContent = 'Adicionado!';
                 e.target.style.backgroundColor = '#2ecc71';
                 
@@ -1601,7 +2004,6 @@
             const fileUpload = document.getElementById('fileUpload').files[0];
             const observations = document.getElementById('observations').value;
             
-            // Calcular preço baseado nas opções
             let basePrice = 12.90;
             
             if (pageCount === '51-100') basePrice = 19.90;
@@ -1614,14 +2016,12 @@
             if (printingType === 'colorido') basePrice += 15;
             else if (printingType === 'misto') basePrice += 8;
             
-            // Descrição personalizada
             let description = `Personalizada: ${pageCount} páginas, ${getPaperTypeName(paperType)}, ${getPrintingTypeName(printingType)}`;
             if (observations) description += `, ${observations}`;
             if (fileUpload) description += `, Arquivo: ${fileUpload.name}`;
             
             addToCart('custom', 'Apostila Personalizada', basePrice.toFixed(2), description);
             
-            // Feedback visual
             addCustomToCartButton.textContent = 'Adicionado ao Carrinho!';
             addCustomToCartButton.style.backgroundColor = '#2ecc71';
             
@@ -1633,7 +2033,7 @@
         
         checkoutButton.addEventListener('click', () => {
             if (cart.length === 0) {
-                alert('Seu carrinho está vazio!');
+                showNotification('Seu carrinho está vazio!', 'error');
                 return;
             }
             
@@ -1645,32 +2045,32 @@
             processOrder();
         });
         
-        // Copiar código PIX
-        copyPixBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(pixCode.textContent).then(() => {
-                copyPixBtn.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
-                copyPixBtn.style.backgroundColor = '#2ecc71';
-                
-                setTimeout(() => {
-                    copyPixBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar Código PIX';
-                    copyPixBtn.style.backgroundColor = '';
-                }, 2000);
-            });
+        // Copiar código PIX ao clicar
+        pixCode.addEventListener('click', () => {
+            if (pixCode.textContent && !pixCode.textContent.includes('Clique em')) {
+                navigator.clipboard.writeText(pixCode.textContent).then(() => {
+                    showNotification('Código PIX copiado! Cole no seu app de banco.');
+                });
+            }
         });
         
         // Simular pagamento PIX
         pixPaidBtn.addEventListener('click', () => {
-            // Fechar modal PIX
             pixModal.style.display = 'none';
-            
-            // Mostrar loading
+            loadingText.textContent = 'Confirmando pagamento...';
             loadingModal.style.display = 'flex';
             
-            // Simular processamento do pagamento
             setTimeout(() => {
                 loadingModal.style.display = 'none';
                 
-                // Mostrar sucesso
+                // Atualizar status do pedido
+                const orderIndex = orders.findIndex(o => o.orderNumber === currentOrderNumber);
+                if (orderIndex !== -1) {
+                    orders[orderIndex].status = 'paid';
+                    localStorage.setItem('apostilas_premium_orders', JSON.stringify(orders));
+                    updateOrdersList();
+                }
+                
                 orderNumber.textContent = currentOrderNumber;
                 successModal.style.display = 'flex';
                 
@@ -1695,7 +2095,36 @@
             successModal.style.display = 'none';
         });
         
-        // Funções auxiliares
+        // Admin
+        adminBtn.addEventListener('click', () => {
+            adminModal.style.display = 'flex';
+        });
+        
+        adminTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                adminTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                document.querySelectorAll('.admin-tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                document.getElementById(tab.dataset.tab + 'Tab').style.display = 'block';
+            });
+        });
+        
+        savePixConfigBtn.addEventListener('click', savePixConfig);
+        
+        clearOrdersBtn.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja limpar todos os pedidos?')) {
+                orders = [];
+                localStorage.removeItem('apostilas_premium_orders');
+                updateOrdersList();
+                showNotification('Pedidos limpos!');
+            }
+        });
+
+        // ================= FUNÇÕES AUXILIARES =================
         function getPaperTypeName(value) {
             switch(value) {
                 case '75g': return 'Papel Offset 75g/m²';
@@ -1713,9 +2142,16 @@
                 default: return '';
             }
         }
-        
-        // Inicializar carrinho
+
+        // ================= INICIALIZAÇÃO =================
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
         updateCart();
+        loadPixConfig();
+        
+        // Verificar se o PIX está configurado ao carregar
+        if (!pixConfig.key) {
+            console.log('PIX não configurado. Configure no botão de engrenagem.');
+        }
     </script>
 </body>
 </html>
