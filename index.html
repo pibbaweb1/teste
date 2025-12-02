@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apostilas Premium - Impressão e Encadernação Profissional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --pix-color: #32BCAD;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-pix {
+            background-color: var(--pix-color);
+        }
+        
+        .btn-pix:hover {
+            background-color: #2a9c8f;
+        }
+        
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Products */
+        .products {
+            padding: 80px 0;
+            background-color: #f5f5f5;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            font-size: 1.2rem;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .product-info p {
+            color: #777;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* Customization */
+        .customization {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .customization-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .customization-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background-color: #ddd;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+        }
+        
+        .customization-options {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .option-group {
+            margin-bottom: 25px;
+        }
+        
+        .option-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .option-group select, .option-group input, .option-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .option-group input[type="file"] {
+            padding: 5px;
+        }
+        
+        /* How it works */
+        .how-it-works {
+            padding: 80px 0;
+            background-color: #f5f5f5;
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+        }
+        
+        .author-info h4 {
+            color: var(--primary);
+        }
+        
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            padding: 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h2 {
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .cart-items {
+            margin-bottom: 30px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-info h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cart-summary {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent);
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        /* Checkout */
+        #checkout-button {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Success Modal */
+        .success-modal {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        /* Checkout Form */
+        .checkout-form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* PIX Payment Section */
+        .pix-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 2px dashed var(--pix-color);
+        }
+        
+        .pix-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .pix-icon {
+            font-size: 2rem;
+            color: var(--pix-color);
+            margin-right: 15px;
+        }
+        
+        .pix-qr-code {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px;
+            border: 1px solid #ddd;
+        }
+        
+        .pix-code {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn {
+            background-color: var(--pix-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2a9c8f;
+        }
+        
+        .pix-instructions {
+            background-color: #e9f7f5;
+            border-left: 4px solid var(--pix-color);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .pix-instructions h4 {
+            color: var(--pix-color);
+            margin-bottom: 10px;
+        }
+        
+        .pix-instructions ol {
+            padding-left: 20px;
+        }
+        
+        .pix-instructions li {
+            margin-bottom: 8px;
+        }
+        
+        /* Payment Info */
+        .payment-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .payment-info h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-info h3 i {
+            margin-right: 10px;
+            color: var(--pix-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .cart-item-actions {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-book"></i>
+                    Apostilas Premium
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="#personalizar">Personalizar</a></li>
+                        <li><a href="#como-funciona">Como Funciona</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                        <li class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Apostilas Impressas e Encadernadas com Qualidade</h1>
+            <p>Produzimos suas apostilas com capa transparente, contra capa preta e espiral. Qualidade profissional para seus materiais educacionais.</p>
+            <a href="#produtos" class="btn">Ver Produtos</a>
+            <a href="#personalizar" class="btn btn-accent">Personalizar Apostila</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Por que Escolher Nossas Apostilas?</h2>
+                <p>Oferecemos qualidade superior e acabamento profissional para seus materiais educacionais</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3>Impressão de Alta Qualidade</h3>
+                    <p>Utilizamos papel de 75g/m² com impressão nítida e definida para garantir a legibilidade do conteúdo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Encadernação Profissional</h3>
+                    <p>Espiral plástico resistente que permite abrir completamente as páginas sem danificar o material.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Capa Protetora</h3>
+                    <p>Capa transparente na frente e contra capa preta atrás para proteger e dar um acabamento elegante.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Pagamento Rápido via PIX</h3>
+                    <p>Pague instantaneamente com PIX e tenha seu pedido processado imediatamente após a confirmação.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products" id="produtos">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Produtos</h2>
+                <p>Confira nossos modelos prontos ou personalize sua apostila conforme sua necessidade</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        Apostila Padrão
+                    </div>
+                    <div class="product-info">
+                        <h3>Apostila Básica</h3>
+                        <p>Encadernação com espiral, capa transparente e contra capa preta. Até 50 páginas.</p>
+                        <div class="product-price">R$ 12,90</div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-id="1" data-name="Apostila Básica" data-price="12.90">Adicionar ao Carrinho</button>
+                            <button class="btn btn-small btn-accent">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        Apostila Média
+                    </div>
+                    <div class="product-info">
+                        <h3>Apostila Intermediária</h3>
+                        <p>Encadernação com espiral, capa transparente e contra capa preta. De 51 a 100 páginas.</p>
+                        <div class="product-price">R$ 19,90</div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-id="2" data-name="Apostila Intermediária" data-price="19.90">Adicionar ao Carrinho</button>
+                            <button class="btn btn-small btn-accent">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        Apostila Grande
+                    </div>
+                    <div class="product-info">
+                        <h3>Apostila Completa</h3>
+                        <p>Encadernação com espiral, capa transparente e contra capa preta. De 101 a 200 páginas.</p>
+                        <div class="product-price">R$ 29,90</div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-id="3" data-name="Apostila Completa" data-price="29.90">Adicionar ao Carrinho</button>
+                            <button class="btn btn-small btn-accent">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customization -->
+    <section class="customization" id="personalizar">
+        <div class="container">
+            <div class="section-title">
+                <h2>Personalize Sua Apostila</h2>
+                <p>Crie a apostila perfeita para suas necessidades específicas</p>
+            </div>
+            <div class="customization-content">
+                <div class="customization-image">
+                    Visualização da Apostila Personalizada
+                </div>
+                <div class="customization-options">
+                    <div class="option-group">
+                        <label for="pageCount">Quantidade de Páginas</label>
+                        <select id="pageCount">
+                            <option value="10-50">10 a 50 páginas</option>
+                            <option value="51-100">51 a 100 páginas</option>
+                            <option value="101-150">101 a 150 páginas</option>
+                            <option value="151-200">151 a 200 páginas</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="paperType">Tipo de Papel</label>
+                        <select id="paperType">
+                            <option value="75g">Papel Offset 75g/m²</option>
+                            <option value="90g">Papel Premium 90g/m²</option>
+                            <option value="reciclado">Papel Reciclado 80g/m²</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="printingType">Tipo de Impressão</label>
+                        <select id="printingType">
+                            <option value="preto-branco">Preto e Branco</option>
+                            <option value="colorido">Colorido</option>
+                            <option value="misto">Misto (primeiras páginas coloridas)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="fileUpload">Envie seu Arquivo</label>
+                        <input type="file" id="fileUpload" accept=".pdf,.doc,.docx">
+                    </div>
+                    <div class="option-group">
+                        <label for="observations">Observações Especiais</label>
+                        <textarea id="observations" rows="4" placeholder="Alguma observação especial sobre sua apostila..."></textarea>
+                    </div>
+                    <button class="btn btn-accent" id="addCustomToCart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="como-funciona">
+        <div class="container">
+            <div class="section-title">
+                <h2>Como Funciona</h2>
+                <p>Processo simples e rápido para adquirir suas apostilas</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Escolha ou Personalize</h3>
+                    <p>Selecione um de nossos modelos prontos ou personalize sua apostila conforme sua necessidade.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Adicione ao Carrinho</h3>
+                    <p>Adicione os produtos ao carrinho e prossiga para o checkout com suas informações.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Pague com PIX</h3>
+                    <p>Finalize seu pedido com pagamento instantâneo via PIX. O pedido é confirmado em segundos.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Receba em Casa</h3>
+                    <p>Produzimos e enviamos sua apostila. Acompanhe o pedido e receba em até 7 dias úteis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>O que Nossos Clientes Dizem</h2>
+                <p>Depoimentos de quem já utilizou nossos serviços</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Excelente qualidade de impressão e acabamento. As apostilas ficaram perfeitas para meu curso. Super recomendo!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Mariana Silva</h4>
+                            <p>Professora</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Adorei a facilidade do pagamento PIX! O pedido foi confirmado na hora e recebi minhas apostilas rapidamente."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Carlos Oliveira</h4>
+                            <p>Instrutor de Treinamentos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Preço justo e atendimento excelente. Fiz várias apostilas personalizadas para minha equipe e todas ficaram perfeitas."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Roberta Santos</h4>
+                            <p>Coordenadora Pedagógica</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Apostilas Premium</h3>
+                    <p>Especialistas em impressão e encadernação de apostilas com qualidade profissional.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="#personalizar">Personalizar</a></li>
+                        <li><a href="#como-funciona">Como Funciona</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> (11) 9999-9999</li>
+                        <li><i class="fas fa-envelope"></i> contato@apostilaspremium.com.br</li>
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Forma de Pagamento</h3>
+                    <p>Aceitamos apenas PIX para pagamentos rápidos e seguros.</p>
+                    <div style="margin-top: 15px; font-size: 2.5rem; color: var(--pix-color);">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Pagamento instantâneo e confirmado em segundos.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Apostilas Premium. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Seu Carrinho</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Itens do carrinho serão inseridos aqui via JavaScript -->
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">R$ 0,00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Frete:</span>
+                    <span id="cartShipping">R$ 0,00</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">R$ 0,00</span>
+                </div>
+                <button class="btn btn-pix" id="checkout-button" style="width: 100%; margin-top: 20px;">
+                    <i class="fas fa-qrcode"></i> Finalizar Compra com PIX
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Finalizar Compra</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="checkout-form">
+                <div class="form-group">
+                    <label for="customerName">Nome Completo</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">E-mail</label>
+                    <input type="email" id="customerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Telefone (WhatsApp)</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Endereço Completo</label>
+                    <input type="text" id="customerAddress" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerCity">Cidade</label>
+                        <input type="text" id="customerCity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerState">Estado</label>
+                        <input type="text" id="customerState" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerCEP">CEP</label>
+                        <input type="text" id="customerCEP" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerNumber">Número</label>
+                        <input type="text" id="customerNumber" required>
+                    </div>
+                </div>
+                
+                <div class="payment-info">
+                    <h3><i class="fas fa-qrcode"></i> Pagamento via PIX</h3>
+                    <p>Após confirmar o pedido, você receberá um QR Code e código PIX para pagamento. O pedido será processado imediatamente após a confirmação do pagamento.</p>
+                </div>
+                
+                <button class="btn btn-pix" id="confirm-purchase" style="width: 100%;">
+                    <i class="fas fa-check-circle"></i> Confirmar Pedido e Gerar PIX
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIX Payment Modal -->
+    <div class="modal" id="pixModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Pagamento via PIX</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="pix-section">
+                <div class="pix-header">
+                    <div class="pix-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--pix-color); margin: 0;">Pague com PIX</h3>
+                        <p style="color: #666; margin: 5px 0 0 0;">Escaneie o QR Code ou copie o código</p>
+                    </div>
+                </div>
+                
+                <div class="pix-qr-code">
+                    <div id="qrCodeDisplay" style="margin: 0 auto 20px; width: 200px; height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #666;">QR Code será gerado aqui</span>
+                    </div>
+                    <p style="font-weight: bold; margin-bottom: 10px;">Valor: <span id="pixAmount">R$ 0,00</span></p>
+                    <p style="font-size: 0.9rem; color: #666;">Escaneie com seu app de banco</p>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <p style="font-weight: bold; margin-bottom: 10px;">OU</p>
+                    <p style="margin-bottom: 10px;">Copie o código PIX:</p>
+                    <div class="pix-code" id="pixCode">
+                        00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865405<span id="pixValue">0.00</span>5802BR5913ApostilasPrem6009SAO PAULO62200516<span id="pixOrderId">AP0000</span>6304E2CA
+                    </div>
+                    <button class="copy-btn" id="copyPixBtn">
+                        <i class="fas fa-copy"></i> Copiar Código PIX
+                    </button>
+                </div>
+                
+                <div class="pix-instructions">
+                    <h4>Como pagar:</h4>
+                    <ol>
+                        <li>Abra o app do seu banco</li>
+                        <li>Selecione "Pagar com PIX"</li>
+                        <li>Escaneie o QR Code ou cole o código</li>
+                        <li>Confirme o pagamento</li>
+                    </ol>
+                </div>
+                
+                <div style="margin-top: 25px; padding: 15px; background-color: #e9f7ef; border-radius: 5px; border-left: 4px solid var(--success);">
+                    <p style="margin: 0; color: #2d6a4f; font-weight: 600;">
+                        <i class="fas fa-info-circle"></i> Após o pagamento, seu pedido será processado automaticamente em até 2 minutos.
+                    </p>
+                </div>
+                
+                <button class="btn btn-success" id="pixPaidBtn" style="width: 100%; margin-top: 25px;">
+                    <i class="fas fa-check"></i> Já efetuei o pagamento
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal" id="loadingModal">
+        <div class="modal-content">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Processando seu pedido...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-modal">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Pedido Confirmado!</h2>
+                <p>Seu pedido foi recebido e está aguardando confirmação de pagamento.</p>
+                <p style="margin: 15px 0; padding: 15px; background-color: #f0f8ff; border-radius: 5px; font-weight: bold;">
+                    Número do pedido: <span id="orderNumber">AP0000</span>
+                </p>
+                <p>Enviaremos um e-mail com todos os detalhes assim que o pagamento for confirmado.</p>
+                <button class="btn btn-success" id="successButton">Continuar Comprando</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carrinho de compras
+        let cart = [];
+        let currentOrderNumber = '';
+        
+        // Elementos do DOM
+        const cartIcon = document.getElementById('cartIcon');
+        const cartModal = document.getElementById('cartModal');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const pixModal = document.getElementById('pixModal');
+        const closeModal = document.querySelectorAll('.close-modal');
+        const cartItems = document.getElementById('cartItems');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const cartShipping = document.getElementById('cartShipping');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutButton = document.getElementById('checkout-button');
+        const confirmPurchaseButton = document.getElementById('confirm-purchase');
+        const cartCount = document.querySelector('.cart-count');
+        
+        // Elementos PIX
+        const pixAmount = document.getElementById('pixAmount');
+        const pixValue = document.getElementById('pixValue');
+        const pixOrderId = document.getElementById('pixOrderId');
+        const pixCode = document.getElementById('pixCode');
+        const copyPixBtn = document.getElementById('copyPixBtn');
+        const pixPaidBtn = document.getElementById('pixPaidBtn');
+        
+        // Modais
+        const loadingModal = document.getElementById('loadingModal');
+        const successModal = document.getElementById('successModal');
+        const successButton = document.getElementById('successButton');
+        const orderNumber = document.getElementById('orderNumber');
+        
+        // Botões "Adicionar ao Carrinho"
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        // Botão para adicionar apostila personalizada
+        const addCustomToCartButton = document.getElementById('addCustomToCart');
+        
+        // Função para atualizar o carrinho
+        function updateCart() {
+            // Atualizar contador
+            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            // Atualizar itens no modal
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; padding: 20px;">Seu carrinho está vazio</p>';
+                cartSubtotal.textContent = 'R$ 0,00';
+                cartShipping.textContent = 'R$ 0,00';
+                cartTotal.textContent = 'R$ 0,00';
+                return;
+            }
+            
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.description || 'Apostila encadernada com espiral'}</p>
+                    </div>
+                    <div class="cart-item-price">R$ ${item.price.toFixed(2)}</div>
+                    <div class="cart-item-actions">
+                        <button class="quantity-btn decrease-quantity" data-id="${item.id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
+                        <button class="quantity-btn remove-item" data-id="${item.id}" style="margin-left: 10px; color: #e74c3c;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            // Calcular frete (fixo por enquanto)
+            const shipping = subtotal > 50 ? 0 : 10;
+            const total = subtotal + shipping;
+            
+            // Atualizar totais
+            cartSubtotal.textContent = `R$ ${subtotal.toFixed(2)}`;
+            cartShipping.textContent = shipping === 0 ? 'Grátis' : `R$ ${shipping.toFixed(2)}`;
+            cartTotal.textContent = `R$ ${total.toFixed(2)}`;
+            
+            // Adicionar eventos aos botões de quantidade
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    decreaseQuantity(id);
+                });
+            });
+            
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    increaseQuantity(id);
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.closest('button').getAttribute('data-id');
+                    removeFromCart(id);
+                });
+            });
+        }
+        
+        // Funções para manipular o carrinho
+        function addToCart(id, name, price, description = '') {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id,
+                    name,
+                    price: parseFloat(price),
+                    quantity: 1,
+                    description
+                });
+            }
+            
+            updateCart();
+        }
+        
+        function increaseQuantity(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += 1;
+                updateCart();
+            }
+        }
+        
+        function decreaseQuantity(id) {
+            const item = cart.find(item => item.id === id);
+            if (item && item.quantity > 1) {
+                item.quantity -= 1;
+                updateCart();
+            }
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+        
+        // Função para gerar número de pedido
+        function generateOrderNumber() {
+            const timestamp = Date.now();
+            const randomNum = Math.floor(Math.random() * 1000);
+            return `AP${timestamp.toString().slice(-6)}${randomNum.toString().padStart(3, '0')}`;
+        }
+        
+        // Função para gerar código PIX
+        function generatePixCode(amount, orderId) {
+            // Esta é uma simulação de um código PIX
+            // Em um sistema real, você precisaria gerar um código PIX válido
+            const amountStr = amount.toFixed(2).replace('.', '');
+            const paddedAmount = amountStr.padStart(10, '0');
+            
+            // Código PIX simulado (não é válido para pagamento real)
+            return `00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865405${paddedAmount}5802BR5913ApostilasPrem6009SAO PAULO62200516${orderId}6304E2CA`;
+        }
+        
+        // Função para processar o pedido
+        function processOrder() {
+            // Validar dados do formulário
+            const customerName = document.getElementById('customerName').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const customerAddress = document.getElementById('customerAddress').value;
+            const customerCity = document.getElementById('customerCity').value;
+            const customerState = document.getElementById('customerState').value;
+            const customerCEP = document.getElementById('customerCEP').value;
+            const customerNumber = document.getElementById('customerNumber').value;
+            
+            if (!customerName || !customerEmail || !customerPhone || !customerAddress || 
+                !customerCity || !customerState || !customerCEP || !customerNumber) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            // Calcular total
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const shipping = subtotal > 50 ? 0 : 10;
+            const total = subtotal + shipping;
+            
+            // Gerar número do pedido
+            currentOrderNumber = generateOrderNumber();
+            
+            // Criar objeto do pedido
+            const order = {
+                customer: {
+                    name: customerName,
+                    email: customerEmail,
+                    phone: customerPhone,
+                    address: `${customerAddress}, ${customerNumber}`,
+                    city: customerCity,
+                    state: customerState,
+                    cep: customerCEP
+                },
+                items: cart,
+                paymentMethod: 'PIX',
+                subtotal: subtotal,
+                shipping: shipping,
+                total: total,
+                orderNumber: currentOrderNumber,
+                date: new Date().toISOString()
+            };
+            
+            // Fechar modal de checkout
+            checkoutModal.style.display = 'none';
+            
+            // Configurar informações PIX
+            pixAmount.textContent = `R$ ${total.toFixed(2)}`;
+            pixValue.textContent = total.toFixed(2);
+            pixOrderId.textContent = currentOrderNumber;
+            
+            // Gerar novo código PIX
+            const pixCodeValue = generatePixCode(total, currentOrderNumber);
+            pixCode.textContent = pixCodeValue;
+            
+            // Mostrar modal PIX
+            pixModal.style.display = 'flex';
+            
+            // Aqui você enviaria o pedido para seu backend
+            console.log('Pedido criado:', order);
+            
+            // Em um sistema real, você enviaria os dados para seu servidor
+            // e geraria um QR Code PIX real
+        }
+        
+        // Event Listeners
+        cartIcon.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+        
+        closeModal.forEach(button => {
+            button.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+                checkoutModal.style.display = 'none';
+                pixModal.style.display = 'none';
+                loadingModal.style.display = 'none';
+                successModal.style.display = 'none';
+            });
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+            if (e.target === checkoutModal) {
+                checkoutModal.style.display = 'none';
+            }
+            if (e.target === pixModal) {
+                pixModal.style.display = 'none';
+            }
+            if (e.target === loadingModal) {
+                loadingModal.style.display = 'none';
+            }
+            if (e.target === successModal) {
+                successModal.style.display = 'none';
+            }
+        });
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-id');
+                const name = e.target.getAttribute('data-name');
+                const price = e.target.getAttribute('data-price');
+                
+                addToCart(id, name, price);
+                
+                // Feedback visual
+                e.target.textContent = 'Adicionado!';
+                e.target.style.backgroundColor = '#2ecc71';
+                
+                setTimeout(() => {
+                    e.target.textContent = 'Adicionar ao Carrinho';
+                    e.target.style.backgroundColor = '';
+                }, 1500);
+            });
+        });
+        
+        addCustomToCartButton.addEventListener('click', () => {
+            const pageCount = document.getElementById('pageCount').value;
+            const paperType = document.getElementById('paperType').value;
+            const printingType = document.getElementById('printingType').value;
+            const fileUpload = document.getElementById('fileUpload').files[0];
+            const observations = document.getElementById('observations').value;
+            
+            // Calcular preço baseado nas opções
+            let basePrice = 12.90;
+            
+            if (pageCount === '51-100') basePrice = 19.90;
+            else if (pageCount === '101-150') basePrice = 24.90;
+            else if (pageCount === '151-200') basePrice = 29.90;
+            
+            if (paperType === '90g') basePrice += 5;
+            else if (paperType === 'reciclado') basePrice += 2;
+            
+            if (printingType === 'colorido') basePrice += 15;
+            else if (printingType === 'misto') basePrice += 8;
+            
+            // Descrição personalizada
+            let description = `Personalizada: ${pageCount} páginas, ${getPaperTypeName(paperType)}, ${getPrintingTypeName(printingType)}`;
+            if (observations) description += `, ${observations}`;
+            if (fileUpload) description += `, Arquivo: ${fileUpload.name}`;
+            
+            addToCart('custom', 'Apostila Personalizada', basePrice.toFixed(2), description);
+            
+            // Feedback visual
+            addCustomToCartButton.textContent = 'Adicionado ao Carrinho!';
+            addCustomToCartButton.style.backgroundColor = '#2ecc71';
+            
+            setTimeout(() => {
+                addCustomToCartButton.textContent = 'Adicionar ao Carrinho';
+                addCustomToCartButton.style.backgroundColor = '';
+            }, 1500);
+        });
+        
+        checkoutButton.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            
+            cartModal.style.display = 'none';
+            checkoutModal.style.display = 'flex';
+        });
+        
+        confirmPurchaseButton.addEventListener('click', () => {
+            processOrder();
+        });
+        
+        // Copiar código PIX
+        copyPixBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(pixCode.textContent).then(() => {
+                copyPixBtn.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
+                copyPixBtn.style.backgroundColor = '#2ecc71';
+                
+                setTimeout(() => {
+                    copyPixBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar Código PIX';
+                    copyPixBtn.style.backgroundColor = '';
+                }, 2000);
+            });
+        });
+        
+        // Simular pagamento PIX
+        pixPaidBtn.addEventListener('click', () => {
+            // Fechar modal PIX
+            pixModal.style.display = 'none';
+            
+            // Mostrar loading
+            loadingModal.style.display = 'flex';
+            
+            // Simular processamento do pagamento
+            setTimeout(() => {
+                loadingModal.style.display = 'none';
+                
+                // Mostrar sucesso
+                orderNumber.textContent = currentOrderNumber;
+                successModal.style.display = 'flex';
+                
+                // Limpar carrinho
+                cart = [];
+                updateCart();
+                
+                // Limpar formulário
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerEmail').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('customerAddress').value = '';
+                document.getElementById('customerCity').value = '';
+                document.getElementById('customerState').value = '';
+                document.getElementById('customerCEP').value = '';
+                document.getElementById('customerNumber').value = '';
+                
+            }, 2000);
+        });
+        
+        successButton.addEventListener('click', () => {
+            successModal.style.display = 'none';
+        });
+        
+        // Funções auxiliares
+        function getPaperTypeName(value) {
+            switch(value) {
+                case '75g': return 'Papel Offset 75g/m²';
+                case '90g': return 'Papel Premium 90g/m²';
+                case 'reciclado': return 'Papel Reciclado 80g/m²';
+                default: return '';
+            }
+        }
+        
+        function getPrintingTypeName(value) {
+            switch(value) {
+                case 'preto-branco': return 'Impressão P&B';
+                case 'colorido': return 'Impressão Colorida';
+                case 'misto': return 'Impressão Mista';
+                default: return '';
+            }
+        }
+        
+        // Inicializar carrinho
+        updateCart();
+    </script>
+</body>
+</html>
