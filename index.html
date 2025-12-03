@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- QR Code library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- ViaCEP API -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         :root {
             --primary: #2c3e50;
@@ -683,6 +685,15 @@
             flex: 1;
         }
         
+        /* CEP Loading */
+        .cep-loading {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
         /* PIX Payment Section */
         .pix-section {
             background-color: #f8f9fa;
@@ -1293,22 +1304,52 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="checkout-form">
+                <!-- Nome Completo -->
                 <div class="form-group">
                     <label for="customerName">Nome Completo *</label>
-                    <input type="text" id="customerName" required>
+                    <input type="text" id="customerName" required placeholder="Digite seu nome completo">
                 </div>
+                
+                <!-- Telefone/WhatsApp -->
+                <div class="form-group">
+                    <label for="customerPhone">Telefone/WhatsApp *</label>
+                    <input type="tel" id="customerPhone" required placeholder="(11) 99999-9999">
+                </div>
+                
+                <!-- E-mail -->
                 <div class="form-group">
                     <label for="customerEmail">E-mail *</label>
-                    <input type="email" id="customerEmail" required>
+                    <input type="email" id="customerEmail" required placeholder="seu@email.com">
                 </div>
+                
+                <!-- CEP -->
+                <div class="form-group" style="position: relative;">
+                    <label for="customerCEP">CEP *</label>
+                    <input type="text" id="customerCEP" required placeholder="00000-000" maxlength="9">
+                    <div class="cep-loading" id="cepLoading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+                
+                <!-- Endereço -->
                 <div class="form-group">
-                    <label for="customerPhone">Telefone (WhatsApp) *</label>
-                    <input type="tel" id="customerPhone" required>
+                    <label for="customerAddress">Endereço *</label>
+                    <input type="text" id="customerAddress" required placeholder="Rua, Avenida, etc.">
                 </div>
-                <div class="form-group">
-                    <label for="customerAddress">Endereço Completo *</label>
-                    <input type="text" id="customerAddress" required>
+                
+                <!-- Número e Complemento -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerNumber">Número *</label>
+                        <input type="text" id="customerNumber" required placeholder="123">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerComplement">Complemento</label>
+                        <input type="text" id="customerComplement" placeholder="Apto, Bloco, etc.">
+                    </div>
                 </div>
+                
+                <!-- Cidade e Estado -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="customerCity">Cidade *</label>
@@ -1316,17 +1357,36 @@
                     </div>
                     <div class="form-group">
                         <label for="customerState">Estado *</label>
-                        <input type="text" id="customerState" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="customerCEP">CEP *</label>
-                        <input type="text" id="customerCEP" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customerNumber">Número *</label>
-                        <input type="text" id="customerNumber" required>
+                        <select id="customerState" required>
+                            <option value="">Selecione</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
                     </div>
                 </div>
                 
@@ -1551,6 +1611,15 @@
         
         // Notificação
         const copiedNotification = document.getElementById('copiedNotification');
+        
+        // Elementos do formulário
+        const customerCEP = document.getElementById('customerCEP');
+        const customerAddress = document.getElementById('customerAddress');
+        const customerNumber = document.getElementById('customerNumber');
+        const customerComplement = document.getElementById('customerComplement');
+        const customerCity = document.getElementById('customerCity');
+        const customerState = document.getElementById('customerState');
+        const cepLoading = document.getElementById('cepLoading');
 
         // ================= FUNÇÕES DO CARRINHO =================
         function updateCart() {
@@ -1658,6 +1727,68 @@
         function removeFromCart(id) {
             cart = cart.filter(item => item.id !== id);
             updateCart();
+        }
+
+        // ================= FUNÇÕES DE FORMULÁRIO =================
+        // Formatação do CEP
+        function formatCEP(cep) {
+            cep = cep.replace(/\D/g, '');
+            if (cep.length > 5) {
+                cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+            }
+            return cep;
+        }
+        
+        // Formatação do telefone
+        function formatPhone(phone) {
+            phone = phone.replace(/\D/g, '');
+            if (phone.length > 10) {
+                return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (phone.length > 6) {
+                return phone.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (phone.length > 2) {
+                return phone.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+            } else {
+                return phone;
+            }
+        }
+        
+        // Buscar endereço pelo CEP usando ViaCEP
+        function buscarCEP(cep) {
+            cep = cep.replace(/\D/g, '');
+            
+            if (cep.length !== 8) {
+                return;
+            }
+            
+            cepLoading.style.display = 'block';
+            
+            // Usando ViaCEP
+            const url = `https://viacep.com.br/ws/${cep}/json/`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        customerAddress.value = data.logradouro || '';
+                        customerCity.value = data.localidade || '';
+                        customerState.value = data.uf || '';
+                        
+                        // Foca no campo de número após preencher o endereço
+                        customerNumber.focus();
+                        
+                        showNotification('Endereço preenchido automaticamente!');
+                    } else {
+                        showNotification('CEP não encontrado. Por favor, preencha manualmente.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar CEP:', error);
+                    showNotification('Erro ao buscar CEP. Preencha manualmente.', 'error');
+                })
+                .finally(() => {
+                    cepLoading.style.display = 'none';
+                });
         }
 
         // ================= FUNÇÕES PIX =================
@@ -1785,18 +1916,31 @@
 
         // ================= PROCESSAMENTO DE PEDIDOS =================
         function validateOrderForm() {
-            const customerName = document.getElementById('customerName').value;
-            const customerEmail = document.getElementById('customerEmail').value;
-            const customerPhone = document.getElementById('customerPhone').value;
-            const customerAddress = document.getElementById('customerAddress').value;
-            const customerCity = document.getElementById('customerCity').value;
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerEmail = document.getElementById('customerEmail').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const customerCEP = document.getElementById('customerCEP').value.trim();
+            const customerAddress = document.getElementById('customerAddress').value.trim();
+            const customerNumber = document.getElementById('customerNumber').value.trim();
+            const customerCity = document.getElementById('customerCity').value.trim();
             const customerState = document.getElementById('customerState').value;
-            const customerCEP = document.getElementById('customerCEP').value;
-            const customerNumber = document.getElementById('customerNumber').value;
             
-            if (!customerName || !customerEmail || !customerPhone || !customerAddress || 
-                !customerCity || !customerState || !customerCEP || !customerNumber) {
-                showNotification('Preencha todos os campos obrigatórios!', 'error');
+            // Validar campos obrigatórios
+            if (!customerName) {
+                showNotification('Preencha o nome completo!', 'error');
+                document.getElementById('customerName').focus();
+                return false;
+            }
+            
+            if (!customerPhone) {
+                showNotification('Preencha o telefone/WhatsApp!', 'error');
+                document.getElementById('customerPhone').focus();
+                return false;
+            }
+            
+            if (!customerEmail) {
+                showNotification('Preencha o e-mail!', 'error');
+                document.getElementById('customerEmail').focus();
                 return false;
             }
             
@@ -1804,6 +1948,37 @@
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(customerEmail)) {
                 showNotification('E-mail inválido!', 'error');
+                document.getElementById('customerEmail').focus();
+                return false;
+            }
+            
+            if (!customerCEP || customerCEP.replace(/\D/g, '').length !== 8) {
+                showNotification('CEP inválido!', 'error');
+                document.getElementById('customerCEP').focus();
+                return false;
+            }
+            
+            if (!customerAddress) {
+                showNotification('Preencha o endereço!', 'error');
+                document.getElementById('customerAddress').focus();
+                return false;
+            }
+            
+            if (!customerNumber) {
+                showNotification('Preencha o número!', 'error');
+                document.getElementById('customerNumber').focus();
+                return false;
+            }
+            
+            if (!customerCity) {
+                showNotification('Preencha a cidade!', 'error');
+                document.getElementById('customerCity').focus();
+                return false;
+            }
+            
+            if (!customerState) {
+                showNotification('Selecione o estado!', 'error');
+                document.getElementById('customerState').focus();
                 return false;
             }
             
@@ -1835,13 +2010,15 @@
                 // Criar objeto do pedido
                 const order = {
                     customer: {
-                        name: document.getElementById('customerName').value,
-                        email: document.getElementById('customerEmail').value,
-                        phone: document.getElementById('customerPhone').value,
-                        address: `${document.getElementById('customerAddress').value}, ${document.getElementById('customerNumber').value}`,
-                        city: document.getElementById('customerCity').value,
-                        state: document.getElementById('customerState').value,
-                        cep: document.getElementById('customerCEP').value
+                        name: document.getElementById('customerName').value.trim(),
+                        phone: document.getElementById('customerPhone').value.trim(),
+                        email: document.getElementById('customerEmail').value.trim(),
+                        cep: document.getElementById('customerCEP').value.trim(),
+                        address: document.getElementById('customerAddress').value.trim(),
+                        number: document.getElementById('customerNumber').value.trim(),
+                        complement: document.getElementById('customerComplement').value.trim(),
+                        city: document.getElementById('customerCity').value.trim(),
+                        state: document.getElementById('customerState').value
                     },
                     items: [...cart],
                     subtotal: subtotal,
@@ -1913,6 +2090,7 @@
                     </div>
                     <div style="margin-top: 10px; font-size: 0.9em;">
                         <div><strong>Cliente:</strong> ${order.customer.name}</div>
+                        <div><strong>Endereço:</strong> ${order.customer.address}, ${order.customer.number}${order.customer.complement ? ' - ' + order.customer.complement : ''}</div>
                         <div><strong>Itens:</strong> ${itemsText}</div>
                     </div>
                 `;
@@ -2096,13 +2274,14 @@
                 
                 // Limpar formulário
                 document.getElementById('customerName').value = '';
-                document.getElementById('customerEmail').value = '';
                 document.getElementById('customerPhone').value = '';
+                document.getElementById('customerEmail').value = '';
+                document.getElementById('customerCEP').value = '';
                 document.getElementById('customerAddress').value = '';
+                document.getElementById('customerNumber').value = '';
+                document.getElementById('customerComplement').value = '';
                 document.getElementById('customerCity').value = '';
                 document.getElementById('customerState').value = '';
-                document.getElementById('customerCEP').value = '';
-                document.getElementById('customerNumber').value = '';
                 
             }, 2000);
         });
@@ -2140,6 +2319,31 @@
             }
         });
 
+        // ================= FORMULÁRIO - EVENTOS =================
+        // Formatar CEP enquanto digita
+        customerCEP.addEventListener('input', function(e) {
+            this.value = formatCEP(this.value);
+            
+            // Buscar CEP quando tiver 9 caracteres (xxxxx-xxx)
+            if (this.value.length === 9) {
+                buscarCEP(this.value);
+            }
+        });
+        
+        // Formatar telefone enquanto digita
+        document.getElementById('customerPhone').addEventListener('input', function(e) {
+            this.value = formatPhone(this.value);
+        });
+        
+        // Limpar formulário quando abrir o checkout
+        checkoutButton.addEventListener('click', () => {
+            // Não limpar os campos, apenas garantir que o formulário está visível
+            // O usuário pode querer editar informações já preenchidas
+            setTimeout(() => {
+                document.getElementById('customerName').focus();
+            }, 300);
+        });
+
         // ================= FUNÇÕES AUXILIARES =================
         function getPaperTypeName(value) {
             switch(value) {
@@ -2168,6 +2372,14 @@
         console.log('PIX configurado com CNPJ:', pixConfig.key);
         console.log('Nome:', pixConfig.name);
         console.log('Cidade:', pixConfig.city);
+        
+        // Adicionar máscara de CEP usando jQuery (para compatibilidade)
+        if (typeof $ !== 'undefined') {
+            $(document).ready(function() {
+                $('#customerCEP').mask('00000-000');
+                $('#customerPhone').mask('(00) 00000-0000');
+            });
+        }
     </script>
 </body>
 </html>
