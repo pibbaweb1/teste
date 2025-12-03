@@ -1449,23 +1449,23 @@
             <div id="pixTab" class="admin-tab-content">
                 <div class="admin-form-group">
                     <label for="pixKey">Chave PIX *</label>
-                    <input type="text" id="pixKey" placeholder="13419415000100">
-                    <small style="color: #666;">13419415000100</small>
+                    <input type="text" id="pixKey" placeholder="seu-pix@email.com ou CPF/CNPJ">
+                    <small style="color: #666;">Informe sua chave PIX (e-mail, CPF, CNPJ ou telefone)</small>
                 </div>
                 
                 <div class="admin-form-group">
-                    <label for="pixName">Nome do PIX</label>
-                    <input type="text" id="pixName" placeholder="Elivaldo Cicero dos Santos">
+                    <label for="pixName">Nome no PIX *</label>
+                    <input type="text" id="pixName" placeholder="Seu Nome ou Nome da Empresa">
                 </div>
                 
                 <div class="admin-form-group">
-                    <label for="pixCity">Cidade</label>
-                    <input type="text" id="pixCity" placeholder="Cubatão">
+                    <label for="pixCity">Cidade *</label>
+                    <input type="text" id="pixCity" placeholder="Cidade">
                 </div>
                 
                 <div class="admin-form-group">
                     <label for="adminEmail">E-mail para notificações</label>
-                    <input type="email" id="adminEmail" placeholder="avenidabrasil284@gmail.com">
+                    <input type="email" id="adminEmail" placeholder="seu-email@dominio.com">
                     <small style="color: #666;">Receberá notificações de novos pedidos</small>
                 </div>
                 
@@ -1498,11 +1498,14 @@
         // Dados do sistema
         let cart = [];
         let currentOrderNumber = '';
+        
+        // SUAS INFORMAÇÕES PIX REAIS - CONFIGURE AQUI
         let pixConfig = {
-            key: '',
-            name: '',
-            city: ''
+            key: "13419451000100", // SEU PIX CNPJ AQUI
+            name: "Apostilas Premium", // SEU NOME OU NOME DA EMPRESA
+            city: "São Paulo" // SUA CIDADE
         };
+        
         let orders = [];
 
         // Elementos do DOM
@@ -1673,6 +1676,20 @@
             // Formatar valor (em centavos, sem separador)
             const valor = Math.round(amount * 100).toString().padStart(10, '0');
             
+            // Determinar o tipo de chave PIX
+            let keyType = "01"; // Padrão para chave aleatória
+            
+            // Verificar o tipo de chave
+            if (pixConfig.key.includes('@')) {
+                keyType = "01"; // E-mail
+            } else if (pixConfig.key.length === 11) {
+                keyType = "02"; // CPF (11 dígitos)
+            } else if (pixConfig.key.length === 14) {
+                keyType = "03"; // CNPJ (14 dígitos)
+            } else if (pixConfig.key.length >= 10 && pixConfig.key.length <= 13) {
+                keyType = "04"; // Telefone
+            }
+            
             // Dados obrigatórios do PIX
             const payload = [
                 {id: "00", value: "01"}, // Payload Format Indicator
@@ -1681,7 +1698,8 @@
                 // Merchant Account Information
                 {id: "26", children: [
                     {id: "00", value: "BR.GOV.BCB.PIX"}, // GUI
-                    {id: "01", value: pixConfig.key} // Chave PIX
+                    {id: "01", value: pixConfig.key}, // Chave PIX
+                    {id: "02", value: keyType} // Tipo de chave
                 ]},
                 
                 // Outros campos
@@ -1795,14 +1813,6 @@
         function processOrder() {
             if (!validateOrderForm()) return;
             
-            // Verificar se o PIX está configurado
-            if (!pixConfig.key || !pixConfig.name || !pixConfig.city) {
-                showNotification('Configure suas informações PIX primeiro!', 'error');
-                checkoutModal.style.display = 'none';
-                adminModal.style.display = 'flex';
-                return;
-            }
-            
             // Calcular total
             const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
             const shipping = subtotal > 50 ? 0 : 10;
@@ -1915,11 +1925,17 @@
         function loadPixConfig() {
             const savedConfig = localStorage.getItem('apostilas_premium_pix_config');
             if (savedConfig) {
+                // Se já tiver configurações salvas, use-as
                 pixConfig = JSON.parse(savedConfig);
-                document.getElementById('pixKey').value = pixConfig.key || '';
-                document.getElementById('pixName').value = pixConfig.name || '';
-                document.getElementById('pixCity').value = pixConfig.city || '';
+            } else {
+                // Senão, use as configurações padrão e salve
+                localStorage.setItem('apostilas_premium_pix_config', JSON.stringify(pixConfig));
             }
+            
+            // Atualizar campos do formulário
+            document.getElementById('pixKey').value = pixConfig.key || '';
+            document.getElementById('pixName').value = pixConfig.name || '';
+            document.getElementById('pixCity').value = pixConfig.city || '';
             
             const savedOrders = localStorage.getItem('apostilas_premium_orders');
             if (savedOrders) {
@@ -2148,11 +2164,10 @@
         updateCart();
         loadPixConfig();
         
-        // Verificar se o PIX está configurado ao carregar
-        if (!pixConfig.key) {
-            console.log('PIX não configurado. Configure no botão de engrenagem.');
-        }
+        // Mostrar mensagem inicial sobre o PIX
+        console.log('PIX configurado com CNPJ:', pixConfig.key);
+        console.log('Nome:', pixConfig.name);
+        console.log('Cidade:', pixConfig.city);
     </script>
 </body>
 </html>
-
